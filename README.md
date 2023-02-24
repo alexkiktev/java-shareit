@@ -1,2 +1,2 @@
 # java-shareit
-Template repository for Shareit project.
+Сервис для шеринга вещей ShareIt.
