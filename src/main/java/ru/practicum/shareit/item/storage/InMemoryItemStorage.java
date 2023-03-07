@@ -38,8 +38,7 @@ public class InMemoryItemStorage implements ItemStorage {
                 if (item.getName() != null) {
                     updatedItem.setName(item.getName());
                 }
-                if (item.getDescription() != null)
-                {
+                if (item.getDescription() != null) {
                     updatedItem.setDescription(item.getDescription());
                 }
                 if (item.getAvailable() != null) {
