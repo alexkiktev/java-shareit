@@ -3,7 +3,6 @@ package ru.practicum.shareit.user.storage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.server.ResponseStatusException;
 import ru.practicum.shareit.user.exception.EmailDuplicateException;
@@ -14,13 +13,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Component
 @Slf4j
 @RequiredArgsConstructor
 @Repository
 public class InMemoryUserStorage implements UserStorage {
 
-    private final HashMap<Long, User> users;
+    private final HashMap<Long, User> users = new HashMap<>();
     private Long id = 0L;
 
     @Override
@@ -80,7 +78,7 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public boolean checkEmailDuplicate(String email) {
-        for (Map.Entry<Long, User> mapEntries: users.entrySet()) {
+        for (Map.Entry<Long, User> mapEntries : users.entrySet()) {
             if (mapEntries.getValue().getEmail().equals(email)) {
                 return true;
             }

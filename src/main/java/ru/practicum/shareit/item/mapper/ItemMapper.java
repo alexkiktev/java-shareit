@@ -1,5 +1,6 @@
 package ru.practicum.shareit.item.mapper;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
@@ -7,7 +8,7 @@ import ru.practicum.shareit.item.model.Item;
 @Service
 public class ItemMapper {
 
-    public ItemDto toItemDto(Item item) {
+    public ItemDto toItemDto(@NotNull Item item) {
         return new ItemDto(
                 item.getId(),
                 item.getName(),
@@ -16,7 +17,7 @@ public class ItemMapper {
         );
     }
 
-    public Item toItemNew(ItemDto itemDto, Long owner) {
+    public Item toItemNew(@NotNull ItemDto itemDto, Long owner) {
         return Item.builder()
                 .id(itemDto.getId())
                 .name(itemDto.getName())
@@ -26,7 +27,7 @@ public class ItemMapper {
                 .build();
     }
 
-    public Item toItemUpdate(ItemDto itemDto) {
+    public Item toItemUpdate(@NotNull ItemDto itemDto) {
         return Item.builder()
                 .id(itemDto.getId())
                 .name(itemDto.getName())

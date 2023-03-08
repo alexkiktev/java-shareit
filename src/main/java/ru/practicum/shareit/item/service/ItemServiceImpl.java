@@ -1,29 +1,26 @@
 package ru.practicum.shareit.item.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.mapper.ItemMapper;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.storage.ItemStorage;
-import ru.practicum.shareit.user.service.UserServiceImpl;
+import ru.practicum.shareit.user.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Component
-@Slf4j
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
 
     private final ItemStorage itemStorage;
-    private final UserServiceImpl userService;
+    private final UserService userService;
     private final ItemMapper itemMapper;
 
     @Override
@@ -56,7 +53,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemDto> searchItems(String text) {
-        if (text.isBlank()) {
+        if (StringUtils.isBlank(text)) {
             return new ArrayList<>();
         }
         List<Item> itemsFound = itemStorage.searchItems(text);

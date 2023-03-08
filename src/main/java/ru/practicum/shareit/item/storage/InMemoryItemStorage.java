@@ -2,8 +2,8 @@ package ru.practicum.shareit.item.storage;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.server.ResponseStatusException;
 import ru.practicum.shareit.item.model.Item;
@@ -11,15 +11,15 @@ import ru.practicum.shareit.item.model.Item;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Component
 @Slf4j
 @RequiredArgsConstructor
 @Repository
 public class InMemoryItemStorage implements ItemStorage {
 
-    private final HashMap<Long, Item> items;
+    private final HashMap<Long, Item> items = new HashMap<>();
     private Long id = 0L;
 
     @Override
@@ -35,15 +35,9 @@ public class InMemoryItemStorage implements ItemStorage {
         if (items.containsKey(item.getId())) {
             Item updatedItem = items.get(item.getId());
             if (userId.equals(updatedItem.getOwner())) {
-                if (item.getName() != null) {
-                    updatedItem.setName(item.getName());
-                }
-                if (item.getDescription() != null) {
-                    updatedItem.setDescription(item.getDescription());
-                }
-                if (item.getAvailable() != null) {
-                    updatedItem.setAvailable(item.getAvailable());
-                }
+                Optional.ofNullable(item.getName()).ifPresent(updatedItem::setName);
+                Optional.ofNullable(item.getDescription()).ifPresent(updatedItem::setDescription);
+                Optional.ofNullable(item.getAvailable()).ifPresent(updatedItem::setAvailable);
                 log.info("Обновлена вещь: " + updatedItem.getName());
                 return updatedItem;
             } else {
@@ -75,8 +69,8 @@ public class InMemoryItemStorage implements ItemStorage {
     @Override
     public List<Item> searchItems(String text) {
         List<Item> itemsFound = items.values().stream()
-                .filter(i -> i.getName().toLowerCase().contains(text.toLowerCase()) ||
-                        i.getDescription().toLowerCase().contains(text.toLowerCase()) && i.getAvailable().equals(true))
+                .filter(i -> StringUtils.containsIgnoreCase(i.getName(), text) ||
+                        StringUtils.containsIgnoreCase(i.getDescription(), text) && i.getAvailable().equals(true))
                 .collect(Collectors.toList());
         return itemsFound;
     }
