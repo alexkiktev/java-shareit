@@ -111,7 +111,7 @@ public class ItemServiceImpl implements ItemService {
             itemsDtoForOwner.add(itemOwnerDto);
         }
         return itemsDtoForOwner.stream()
-                .sorted(Comparator.comparing(ItemOwnerDto :: getId))
+                .sorted(Comparator.comparing(ItemOwnerDto::getId))
                 .collect(Collectors.toList());
     }
 
@@ -121,14 +121,14 @@ public class ItemServiceImpl implements ItemService {
                 .sorted(Comparator.comparing(Booking::getEnd).reversed())
                 .filter(b -> LocalDateTime.now().isAfter(b.getStart()))
                 .findFirst()
-                .map(bookingMapper :: toBookingItemInfoDto)
+                .map(bookingMapper::toBookingItemInfoDto)
                 .orElse(null);
         itemOwnerDto.setLastBooking(lastBooking);
         BookingItemInfoDto nextBooking = bookings.stream()
                 .sorted(Comparator.comparing(Booking::getStart))
                 .filter(b -> LocalDateTime.now().isBefore(b.getStart()))
                 .findFirst()
-                .map(bookingMapper :: toBookingItemInfoDto)
+                .map(bookingMapper::toBookingItemInfoDto)
                 .orElse(null);
         itemOwnerDto.setNextBooking(nextBooking);
     }
