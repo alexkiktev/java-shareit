@@ -192,7 +192,7 @@ public class BookingServiceImpl implements BookingService {
 
     private User getUser(Long userId) {
         return userRepository.findById(userId).orElseThrow(() ->
-                new NotFoundException( String.format("Пользователь id %s не найден!", userId)));
+                new NotFoundException(String.format("Пользователь id %s не найден!", userId)));
     }
 
     private Item getItem(Long itemId) {
