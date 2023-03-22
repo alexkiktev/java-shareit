@@ -2,9 +2,9 @@ package ru.practicum.shareit.booking.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class NotFoundStatusException extends RuntimeException {
+public class NotFoundStateException extends RuntimeException {
 
-    public NotFoundStatusException(String message) {
+    public NotFoundStateException(String message) {
         super(message);
     }
 

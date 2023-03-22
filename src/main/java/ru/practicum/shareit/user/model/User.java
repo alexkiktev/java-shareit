@@ -11,7 +11,7 @@ import java.util.Objects;
 @ToString
 @AllArgsConstructor
 @Entity
-@Table(name = "users", schema = "public")
+@Table(name = "users")
 @NoArgsConstructor
 public class User {
     @Id

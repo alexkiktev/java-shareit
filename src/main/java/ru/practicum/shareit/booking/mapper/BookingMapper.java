@@ -22,7 +22,7 @@ public class BookingMapper {
         );
     }
 
-    public BookingItemInfoDto toBookingItemInfoDto(Booking booking) {
+    public BookingItemInfoDto toBookingItemInfoDto(@NotNull Booking booking) {
         return BookingItemInfoDto.builder()
                 .id(booking.getId())
                 .bookerId(booking.getBooker().getId())
