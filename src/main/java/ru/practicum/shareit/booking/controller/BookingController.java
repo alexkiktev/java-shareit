@@ -29,7 +29,7 @@ public class BookingController {
     public BookingOutputDto approvedBooking(@RequestHeader(USER_ID) Long userId,
                                             @PathVariable Long bookingId,
                                             @RequestParam boolean approved) {
-        return bookingService.existUserById(userId, bookingId, approved);
+        return bookingService.approvedBooking(userId, bookingId, approved);
     }
 
     @GetMapping("/{bookingId}")

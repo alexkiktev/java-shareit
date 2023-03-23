@@ -32,7 +32,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingOutputDto createBooking(Long bookerId, BookingInputDto bookingInputDto) {
-        User booker = getUser(bookerId);
+        User booker = existUserById(bookerId);
         Item item = getItem(bookingInputDto.getItemId());
         if (bookerId.equals(item.getOwner())) {
             throw new BookingOwnerException("Владелец не может бронировать свои же вещи!");
@@ -54,8 +54,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public BookingOutputDto existUserById(Long userId, Long bookingId, boolean approved) {
-        getUser(userId);
+    public BookingOutputDto approvedBooking(Long userId, Long bookingId, boolean approved) {
+        existUserById(userId);
         Booking booking = getBooking(bookingId);
         if (!Objects.equals(userId, booking.getItem().getOwner())) {
             throw new BookingOwnerException("Только владелец может подтвердить бронь");
@@ -73,7 +73,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingOutputDto getBookingById(Long userId, Long bookingId) {
-        getUser(userId);
+        existUserById(userId);
         Booking booking = getBooking(bookingId);
         if (!Objects.equals(userId, booking.getItem().getOwner()) &&
                 !Objects.equals(userId, booking.getBooker().getId())) {
@@ -84,7 +84,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<BookingOutputDto> getBookingByUser(Long userId, State state) {
-        getUser(userId);
+        existUserById(userId);
         switch (state) {
             case ALL:
                 return bookingRepository.findBookingsByBookerIdOrderByStartDesc(userId)
@@ -134,7 +134,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     public List<BookingOutputDto> getBookingByOwner(Long ownerId, State state) {
-        getUser(ownerId);
+        existUserById(ownerId);
         switch (state) {
             case ALL:
                 return bookingRepository.findBookingByItem_OwnerOrderByStartDesc(ownerId)
@@ -183,7 +183,7 @@ public class BookingServiceImpl implements BookingService {
         }
     }
 
-    private User getUser(Long userId) {
+    private User existUserById(Long userId) {
         return userRepository.findById(userId).orElseThrow(() ->
                 new NotFoundException(String.format("Пользователь id %s не найден!", userId)));
     }
