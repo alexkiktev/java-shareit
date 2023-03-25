@@ -1,7 +1,6 @@
 package ru.practicum.shareit.item.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 import ru.practicum.shareit.utils.MarkerValidation;
 
 import javax.validation.constraints.NotBlank;
