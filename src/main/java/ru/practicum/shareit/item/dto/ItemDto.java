@@ -16,4 +16,5 @@ public class ItemDto {
     private String description;
     @NotNull(groups = {MarkerValidation.OnCreate.class})
     private Boolean available;
+    private Long requestId;
 }

@@ -1,4 +1,4 @@
-package ru.practicum.shareit.booking.exception.dto;
+package ru.practicum.shareit.utils.dto;
 
 import lombok.Data;
 

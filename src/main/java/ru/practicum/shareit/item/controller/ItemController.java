@@ -11,6 +11,8 @@ import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.utils.MarkerValidation;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 @RestController
@@ -44,19 +46,27 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemOwnerDto> getItemsOwners(@RequestHeader(USER_ID) Long userId) {
+    public List<ItemOwnerDto> getItemsOwners(@RequestHeader(USER_ID) Long userId,
+                                             @PositiveOrZero @RequestParam(name = "from", defaultValue = "0")
+                                             Integer from,
+                                             @Positive @RequestParam(name = "size", defaultValue = "20")
+                                                 Integer size) {
         log.info(String.format("Пользователь %s запросил все свои вещи", userId));
-        return itemService.getItemsOwners(userId);
+        return itemService.getItemsOwners(userId, from, size);
     }
 
     @GetMapping("/search")
-    public List<ItemDto> searchItems(@RequestHeader(USER_ID) Long userId, @RequestParam String text) {
+    public List<ItemDto> searchItems(@RequestHeader(USER_ID) Long userId, @RequestParam String text,
+                                     @PositiveOrZero @RequestParam(name = "from", defaultValue = "0")
+                                     Integer from,
+                                     @Positive @RequestParam(name = "size", defaultValue = "20")
+                                         Integer size) {
         if (text.isBlank()) {
             log.info(String.format("Пользователь %s не заполнил параметр для поиска вещи", userId));
         } else {
             log.info(String.format("Пользователь %s ищет %s", userId, text));
         }
-        return itemService.searchItems(text);
+        return itemService.searchItems(text, from, size);
     }
 
     @PostMapping("/{itemId}/comment")

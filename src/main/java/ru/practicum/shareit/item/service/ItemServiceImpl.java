@@ -2,6 +2,9 @@ package ru.practicum.shareit.item.service;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -81,9 +84,11 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemOwnerDto> getItemsOwners(Long userId) {
+    public List<ItemOwnerDto> getItemsOwners(Long userId, Integer from, Integer size) {
         userService.getUser(userId);
-        List<Item> itemsOwners = itemRepository.findItemsByOwner(userId);
+        Pageable pageParams = PageRequest.of(from / size, size);
+        Page<Item> pageItem = itemRepository.findItemsByOwner(userId, pageParams);
+        List<Item> itemsOwners = pageItem.getContent();
         if (itemsOwners.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     String.format("У пользователя %s нет зарегистрированных вещей", userId));
@@ -126,11 +131,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemDto> searchItems(String text) {
+    public List<ItemDto> searchItems(String text, Integer from, Integer size) {
         if (StringUtils.isBlank(text)) {
             return new ArrayList<>();
         }
-        List<Item> itemsFound = itemRepository.findAll().stream()
+        Pageable pageParams = PageRequest.of(from / size, size);
+        List<Item> itemsFound = itemRepository.findAll(pageParams).stream()
                 .filter(i -> StringUtils.containsIgnoreCase(i.getName(), text) ||
                         StringUtils.containsIgnoreCase(i.getDescription(), text) && i.getAvailable().equals(true))
                 .collect(Collectors.toList());
