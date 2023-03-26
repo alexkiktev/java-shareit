@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ItemDto {
     private Long id;
     @NotBlank(groups = {MarkerValidation.OnCreate.class})

@@ -11,7 +11,13 @@ import java.util.Objects;
 @ToString
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "users",
+        uniqueConstraints =
+                {
+                        @UniqueConstraint(columnNames = "id"),
+                        @UniqueConstraint(columnNames = "email")
+                }
+)
 @NoArgsConstructor
 public class User {
     @Id

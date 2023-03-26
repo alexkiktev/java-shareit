@@ -43,14 +43,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long id) {
         User deletedUser = userRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь id " + id + "не найден!"));
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь id " + id + " не найден!"));
         userRepository.delete(deletedUser);
     }
 
     @Override
     public UserDto getUser(Long id) {
         return userMapper.toUserDto(userRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь id " + id + "не найден!")));
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь id " + id + " не найден!")));
     }
 
     @Override
