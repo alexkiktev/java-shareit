@@ -113,6 +113,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     private BookingItemInfoDto getLastBooking(List<Booking> bookings) {
+        if (bookings.isEmpty()) {
+            return null;
+        }
         return bookings.stream()
                 .sorted(Comparator.comparing(Booking::getEnd).reversed())
                 .filter(b -> LocalDateTime.now().isAfter(b.getStart()))
@@ -122,6 +125,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     private BookingItemInfoDto getNextBooking(List<Booking> bookings) {
+        if (bookings.isEmpty()) {
+            return null;
+        }
         return bookings.stream()
                 .sorted(Comparator.comparing(Booking::getStart))
                 .filter(b -> LocalDateTime.now().isBefore(b.getStart()))

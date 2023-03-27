@@ -20,4 +20,5 @@ public class UserDto {
     private String email;
     @NotBlank(groups = {MarkerValidation.OnCreate.class})
     private String name;
+
 }

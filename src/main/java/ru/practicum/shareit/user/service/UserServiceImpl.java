@@ -3,6 +3,8 @@ package ru.practicum.shareit.user.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.exception.EmailDuplicateException;
@@ -22,11 +24,13 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public UserDto createUser(UserDto userDto) {
         return userMapper.toUserDto(userRepository.save(userMapper.toUser(userDto)));
     }
 
     @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public UserDto updateUser(UserDto userDto, Long id) {
         User updatedUser = userRepository.findById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь id " + id + "не найден!"));
@@ -41,6 +45,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void deleteUser(Long id) {
         User deletedUser = userRepository.findById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь id " + id + " не найден!"));
@@ -48,17 +53,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public UserDto getUser(Long id) {
         return userMapper.toUserDto(userRepository.findById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь id " + id + " не найден!")));
     }
 
     @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public List<UserDto> getAllUsers() {
         return userRepository.findAll().stream().map(userMapper::toUserDto).collect(Collectors.toList());
     }
 
-    public boolean checkEmailDuplicate(String email) {
+    private boolean checkEmailDuplicate(String email) {
         return userRepository.findAll().stream().anyMatch(u -> u.getEmail().equals(email));
     }
 
