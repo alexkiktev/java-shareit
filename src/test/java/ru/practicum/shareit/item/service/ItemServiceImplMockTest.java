@@ -140,8 +140,8 @@ class ItemServiceImplMockTest {
 
         when(itemRepository.findById(itemDto.getId())).thenReturn(Optional.of(item));
         when(itemMapper.toItemOwnerDto(item)).thenReturn(itemOwnerDto);
-        when(bookingRepository.findBookingsByItemIdAndStatus(itemOwnerDto.getId(), Status.APPROVED)).
-                thenReturn(bookings);
+        when(bookingRepository.findBookingsByItemIdAndStatus(itemOwnerDto.getId(), Status.APPROVED))
+                .thenReturn(bookings);
 
         Assertions.assertEquals(itemOwnerDto, itemServiceImpl.getItem(item.getId(), userId));
     }
