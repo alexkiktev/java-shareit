@@ -1,5 +1,6 @@
 package ru.practicum.shareit.booking.repository;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,9 +11,9 @@ import java.util.List;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-    List<Booking> findBookingsByBookerIdOrderByStartDesc(Long userId, Pageable pageParams);
+    Page<Booking> findBookingsByBookerIdOrderByStartDesc(Long userId, Pageable pageParams);
 
-    List<Booking> findBookingByItem_OwnerOrderByStartDesc(Long ownerId, Pageable pageParams);
+    Page<Booking> findBookingByItem_OwnerOrderByStartDesc(Long ownerId, Pageable pageParams);
 
     @Query(value = "select count(*)  " +
             "from bookings as b " +

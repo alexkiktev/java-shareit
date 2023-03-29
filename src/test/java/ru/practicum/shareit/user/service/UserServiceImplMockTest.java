@@ -126,7 +126,6 @@ class UserServiceImplMockTest {
         UserDto requiredUserDto = new UserDto(1L, "a@a.ru", "Alex");
         List<User> listUser = new ArrayList<>(List.of(requiredUser));
         List<UserDto> listUserDto = new ArrayList<>(List.of(requiredUserDto));
-
         when(userRepository.findAll()).thenReturn(listUser);
         when(userMapper.toUserDto(requiredUser)).thenReturn(requiredUserDto);
 

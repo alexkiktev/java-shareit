@@ -32,12 +32,14 @@ public class RequestServiceImpl implements RequestService {
     private final ItemRepository itemRepository;
     private final ItemMapper itemMapper;
 
+    @Override
     public RequestDto createRequest(Long userId, RequestDto requestDto) {
         existUserById(userId);
         requestDto.setRequestor(userId);
         return requestMapper.toRequestDto(requestRepository.save(requestMapper.toRequest(requestDto)));
     }
 
+    @Override
     public List<RequestItemInfoDto> getRequestByUser(Long userId) {
         existUserById(userId);
         List<Request> requestsByUser = requestRepository.findByRequestorOrderByCreatedDesc(userId);
@@ -50,6 +52,7 @@ public class RequestServiceImpl implements RequestService {
         return requestItemInfoDtoList;
     }
 
+    @Override
     public List<RequestItemInfoDto> getAllRequests(Long userId, Integer from, Integer size) {
         existUserById(userId);
         Pageable pageParams = PageRequest.of(from / size, size, Sort.by("created").descending());
@@ -64,6 +67,7 @@ public class RequestServiceImpl implements RequestService {
         return requestItemInfoDtoList;
     }
 
+    @Override
     public RequestItemInfoDto getRequestById(Long userId, Long requestId) {
         existUserById(userId);
         Request request = requestRepository.findById(requestId).orElseThrow(() ->

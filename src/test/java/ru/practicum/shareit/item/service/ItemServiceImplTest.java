@@ -9,6 +9,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import ru.practicum.shareit.item.dto.ItemDto;
+import ru.practicum.shareit.item.dto.ItemOwnerDto;
 import ru.practicum.shareit.item.repository.ItemRepository;
 
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
@@ -57,7 +58,7 @@ class ItemServiceImplTest {
     @Transactional
     @Sql("classpath:cleanup.sql")
     @Sql("classpath:test_users.sql")
-    void succesful_UserIsOwner_updateItemTest() {
+    void successful_UserIsOwner_updateItemTest() {
         Long userId = 1L;
         ItemDto itemInputDto = new ItemDto(null, "Отвертка", "Большая отвертка",
                 true, null);
@@ -82,6 +83,32 @@ class ItemServiceImplTest {
     @Transactional
     @Sql("classpath:cleanup.sql")
     @Sql("classpath:test_users.sql")
+    void throwException_whenUserNotFound_updateItemTest() {
+        Long userId = 999999999L;
+        Long itemId = 1L;
+        ItemDto itemDto = new ItemDto(null, "Отвертка", "Большая отвертка",
+                true, null);
+
+        Assertions.assertThrows(RuntimeException.class, () -> itemServiceImpl.updateItem(userId, itemId, itemDto));
+    }
+
+    @Test
+    @Transactional
+    @Sql("classpath:cleanup.sql")
+    @Sql("classpath:test_users.sql")
+    void throwException_whenItemNotFound_updateItemTest() {
+        Long controlId = 100L;
+        Long itemId = 1L;
+        ItemDto itemDto = new ItemDto(null, "Отвертка", "Большая отвертка",
+                true, null);
+
+        Assertions.assertThrows(RuntimeException.class, () -> itemServiceImpl.updateItem(controlId, itemId, itemDto));
+    }
+
+    @Test
+    @Transactional
+    @Sql("classpath:cleanup.sql")
+    @Sql("classpath:test_users.sql")
     void throwException_whenUserIsNotOwner_updateItemTest() {
         Long ownerId = 1L;
         Long userId = 15L;
@@ -94,6 +121,81 @@ class ItemServiceImplTest {
 
         Assertions.assertThrows(ResponseStatusException.class, () -> itemServiceImpl.updateItem(userId,
                 createdItem.getId(), itemForUpdateDto));
+    }
+
+    @Test
+    @Transactional
+    @Sql("classpath:cleanup.sql")
+    @Sql("classpath:test_users.sql")
+    @Sql("classpath:test_items.sql")
+    void successful_getItemTest() {
+        Long userId = 3L;
+        Long itemId = 1L;
+        ItemOwnerDto controlItemDto = ItemOwnerDto.builder()
+                .id(itemId)
+                .name("Отбойный молоток")
+                .description("Электрический инструмент")
+                .available(true)
+                .ownerId(1L)
+                .lastBooking(null)
+                .nextBooking(null)
+                .comments(null)
+                .build();
+
+        ItemOwnerDto getItemDto = itemServiceImpl.getItem(itemId, userId);
+
+        Assertions.assertEquals(controlItemDto.getId(), getItemDto.getId());
+        Assertions.assertEquals(controlItemDto.getAvailable(), getItemDto.getAvailable());
+    }
+
+    @Test
+    @Transactional
+    @Sql("classpath:cleanup.sql")
+    @Sql("classpath:test_users.sql")
+    @Sql("classpath:test_items.sql")
+    void throwException_whenUserNotFound_getItemTest() {
+        Long userId = 999999999L;
+        Long itemId = 1L;
+
+        Assertions.assertThrows(RuntimeException.class, () -> itemServiceImpl.getItem(itemId, userId));
+    }
+
+    @Test
+    @Transactional
+    @Sql("classpath:cleanup.sql")
+    @Sql("classpath:test_users.sql")
+    @Sql("classpath:test_items.sql")
+    void throwException_whenItemNotFound_getItemTest() {
+        Long userId = 1L;
+        Long itemId = 99999999999L;
+
+        Assertions.assertThrows(RuntimeException.class, () -> itemServiceImpl.getItem(itemId, userId));
+    }
+
+    @Test
+    @Transactional
+    @Sql("classpath:cleanup.sql")
+    @Sql("classpath:test_users.sql")
+    @Sql("classpath:test_items.sql")
+    void throwException_whenUserNotFound_getItemsOwners() {
+        Long userId = 999999999L;
+        Integer from = 0;
+        Integer size = 20;
+
+        Assertions.assertThrows(RuntimeException.class, () -> itemServiceImpl.getItemsOwners(userId, from, size));
+    }
+
+    @Test
+    @Transactional
+    @Sql("classpath:cleanup.sql")
+    @Sql("classpath:test_users.sql")
+    @Sql("classpath:test_items.sql")
+    void throwException_whenUserDoesNotHaveItems_getItemsOwners() {
+        Long userId = 3L;
+        Integer from = 0;
+        Integer size = 20;
+
+        Assertions.assertThrows(RuntimeException.class, () -> itemServiceImpl.getItemsOwners(userId, from, size));
     }
 
 }

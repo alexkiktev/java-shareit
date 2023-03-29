@@ -112,6 +112,19 @@ class UserServiceImplTest {
     @Test
     @Transactional
     @Sql("classpath:cleanup.sql")
+    void throwException_whenUserNotFound_updateUserTest() {
+        UserDto userInputDto = new UserDto(null, "new@test.ru", "Alex");
+        Long controlId = 2L;
+        UserDto userInputDto2 = new UserDto(controlId, "test@test.ru", "Alex");
+
+        userServiceImpl.createUser(userInputDto);
+
+        Assertions.assertThrows(RuntimeException.class, () -> userServiceImpl.updateUser(userInputDto2, controlId));
+    }
+
+    @Test
+    @Transactional
+    @Sql("classpath:cleanup.sql")
     void successful_deleteUser() {
         UserDto userDto = new UserDto(null, "a@a.ru", "Alex");
 
@@ -119,6 +132,18 @@ class UserServiceImplTest {
         userServiceImpl.deleteUser(savedUser.getId());
 
         Assertions.assertTrue(userServiceImpl.getAllUsers().isEmpty());
+    }
+
+    @Test
+    @Transactional
+    @Sql("classpath:cleanup.sql")
+    void throwException_whenUserNotFound_deleteUser() {
+        UserDto userDto = new UserDto(null, "a@a.ru", "Alex");
+        Long controlId = 2L;
+
+        UserDto savedUser = userServiceImpl.createUser(userDto);
+
+        Assertions.assertThrows(RuntimeException.class, () -> userServiceImpl.deleteUser(controlId));
     }
 
 }

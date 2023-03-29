@@ -68,6 +68,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemOwnerDto getItem(Long itemId, Long userId) {
+        userService.getUser(userId);
         ItemOwnerDto itemOwnerDto = itemMapper.toItemOwnerDto(itemRepository.findById(itemId).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Вещь id %s не найдена!", itemId))));
         List<CommentDto> commentsDto = commentRepository.findCommentByItemId(itemId).stream()
