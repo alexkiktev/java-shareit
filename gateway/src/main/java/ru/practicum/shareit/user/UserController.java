@@ -1,14 +1,13 @@
-package ru.practicum.shareit.user.controller;
+package ru.practicum.shareit.user;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.user.client.UserClient;
 import ru.practicum.shareit.user.dto.UserDto;
-import ru.practicum.shareit.user.service.UserService;
 import ru.practicum.shareit.utils.MarkerValidation;
-
-import java.util.List;
 
 @RestController
 @Slf4j
@@ -17,7 +16,7 @@ import java.util.List;
 @Validated
 public class UserController {
 
-    private final UserService userService;
+    private final UserClient userClient;
 
     @GetMapping("/hello")
     public String sayHello() {
@@ -26,34 +25,34 @@ public class UserController {
     }
 
     @PostMapping
-    public UserDto createUser(@RequestBody @Validated({MarkerValidation.OnCreate.class}) UserDto userDto) {
+    public ResponseEntity<Object> createUser(@RequestBody @Validated({MarkerValidation.OnCreate.class}) UserDto userDto) {
         log.info("Получен запрос на создание пользователя");
-        return userService.createUser(userDto);
+        return userClient.createUser(userDto);
     }
 
     @PatchMapping("/{id}")
-    public UserDto updateUser(@RequestBody @Validated({MarkerValidation.OnUpdate.class}) UserDto userDto,
+    public ResponseEntity<Object> updateUser(@RequestBody @Validated({MarkerValidation.OnUpdate.class}) UserDto userDto,
                               @PathVariable Long id) {
         log.info("Получен запрос на обновление данных пользователя");
-        return userService.updateUser(userDto, id);
+        return userClient.updateUser(userDto, id);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         log.info("Получен запрос на удаление пользователя id {}", id);
-        userService.deleteUser(id);
+        userClient.deleteUser(id);
     }
 
     @GetMapping("/{id}")
-    public UserDto getUser(@PathVariable Long id) {
+    public ResponseEntity<Object> getUser(@PathVariable Long id) {
         log.info("Получен запрос данных пользователя id {}", id);
-        return userService.getUser(id);
+        return userClient.getUser(id);
     }
 
     @GetMapping
-    public List<UserDto> getAllUsers() {
+    public ResponseEntity<Object> getAllUsers() {
         log.info("Получен запрос всех пользователей");
-        return userService.getAllUsers();
+        return userClient.getAllUsers();
     }
 
 }

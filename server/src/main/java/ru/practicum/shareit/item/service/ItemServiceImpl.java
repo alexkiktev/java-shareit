@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.server.ResponseStatusException;
 import ru.practicum.shareit.booking.dto.BookingItemInfoDto;
 import ru.practicum.shareit.booking.exception.NotFoundException;
@@ -114,7 +115,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     private BookingItemInfoDto getLastBooking(List<Booking> bookings) {
-        if (bookings.isEmpty()) {
+        if (CollectionUtils.isEmpty(bookings)) {
             return null;
         }
         return bookings.stream()
@@ -126,7 +127,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     private BookingItemInfoDto getNextBooking(List<Booking> bookings) {
-        if (bookings.isEmpty()) {
+        if (CollectionUtils.isEmpty(bookings)) {
             return null;
         }
         return bookings.stream()
