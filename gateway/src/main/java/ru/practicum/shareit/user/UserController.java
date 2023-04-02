@@ -19,7 +19,8 @@ public class UserController {
     private final UserClient userClient;
 
     @PostMapping
-    public ResponseEntity<Object> createUser(@RequestBody @Validated({MarkerValidation.OnCreate.class}) UserDto userDto) {
+    public ResponseEntity<Object> createUser(@RequestBody
+                                                 @Validated({MarkerValidation.OnCreate.class}) UserDto userDto) {
         log.info("Получен запрос на создание пользователя");
         return userClient.createUser(userDto);
     }
