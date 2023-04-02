@@ -43,14 +43,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long id) {
         User deletedUser = userRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь id " + id + "не найден!"));
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь id " + id + " не найден!"));
         userRepository.delete(deletedUser);
     }
 
     @Override
     public UserDto getUser(Long id) {
         return userMapper.toUserDto(userRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь id " + id + "не найден!")));
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь id " + id + " не найден!")));
     }
 
     @Override
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll().stream().map(userMapper::toUserDto).collect(Collectors.toList());
     }
 
-    public boolean checkEmailDuplicate(String email) {
+    private boolean checkEmailDuplicate(String email) {
         return userRepository.findAll().stream().anyMatch(u -> u.getEmail().equals(email));
     }
 
