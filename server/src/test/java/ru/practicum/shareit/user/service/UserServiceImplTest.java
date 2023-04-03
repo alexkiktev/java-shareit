@@ -6,14 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.exception.EmailDuplicateException;
 import ru.practicum.shareit.user.repository.UserRepository;
 
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 
-@Transactional
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
 class UserServiceImplTest {
@@ -24,7 +22,6 @@ class UserServiceImplTest {
     private UserServiceImpl userServiceImpl;
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     void successful_createUserTest() {
         UserDto userDto = new UserDto(null, "a@a.ru", "Alex");
@@ -38,7 +35,6 @@ class UserServiceImplTest {
     }
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     void throwException_whenNameEmpty_createUserTest() {
         UserDto userDto = new UserDto(null, null, "Alex");
@@ -47,7 +43,6 @@ class UserServiceImplTest {
     }
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     void throwException_whenEmailEmpty_createUserTest() {
         UserDto userDto = new UserDto(null, "a@a.ru", null);
@@ -56,7 +51,6 @@ class UserServiceImplTest {
     }
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     void throwException_whenEmailDuplicate_createUserTest() {
         UserDto userDto = new UserDto(null, "test@test.ru", "Alex");
@@ -69,7 +63,6 @@ class UserServiceImplTest {
     }
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     void throwException_whenInvalidEmail_createUserTest() {
         UserDto userDto = new UserDto(null, "email.ru", "Alex");
@@ -78,7 +71,6 @@ class UserServiceImplTest {
     }
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     void successful_updateUserTest() {
         UserDto userInputDto = new UserDto(null, "test@test.ru", "Alex");
@@ -94,7 +86,6 @@ class UserServiceImplTest {
     }
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     void throwException_whenEmailDuplicate_updateUserTest() {
         UserDto userInputDto = new UserDto(null, "new@test.ru", "Alex");
@@ -110,7 +101,6 @@ class UserServiceImplTest {
     }
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     void throwException_whenUserNotFound_updateUserTest() {
         UserDto userInputDto = new UserDto(null, "new@test.ru", "Alex");
@@ -123,7 +113,6 @@ class UserServiceImplTest {
     }
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     void successful_deleteUser() {
         UserDto userDto = new UserDto(null, "a@a.ru", "Alex");
@@ -135,7 +124,6 @@ class UserServiceImplTest {
     }
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     void throwException_whenUserNotFound_deleteUser() {
         UserDto userDto = new UserDto(null, "a@a.ru", "Alex");

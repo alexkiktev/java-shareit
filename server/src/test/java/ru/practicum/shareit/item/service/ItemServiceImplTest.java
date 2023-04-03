@@ -14,7 +14,6 @@ import ru.practicum.shareit.item.repository.ItemRepository;
 
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 
-@Transactional
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
 class ItemServiceImplTest {
@@ -25,7 +24,6 @@ class ItemServiceImplTest {
     private ItemServiceImpl itemServiceImpl;
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     @Sql("classpath:test_users.sql")
     void successful_createItemTest() {
@@ -43,7 +41,6 @@ class ItemServiceImplTest {
     }
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     @Sql("classpath:test_users.sql")
     void throwException_whenUserNotFound_createItemTest() {
@@ -55,7 +52,6 @@ class ItemServiceImplTest {
     }
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     @Sql("classpath:test_users.sql")
     void successful_UserIsOwner_updateItemTest() {
@@ -80,7 +76,6 @@ class ItemServiceImplTest {
     }
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     @Sql("classpath:test_users.sql")
     void throwException_whenUserNotFound_updateItemTest() {
@@ -93,7 +88,6 @@ class ItemServiceImplTest {
     }
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     @Sql("classpath:test_users.sql")
     void throwException_whenItemNotFound_updateItemTest() {
@@ -106,7 +100,6 @@ class ItemServiceImplTest {
     }
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     @Sql("classpath:test_users.sql")
     void throwException_whenUserIsNotOwner_updateItemTest() {
@@ -124,7 +117,6 @@ class ItemServiceImplTest {
     }
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     @Sql("classpath:test_users.sql")
     @Sql("classpath:test_items.sql")
@@ -149,7 +141,6 @@ class ItemServiceImplTest {
     }
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     @Sql("classpath:test_users.sql")
     @Sql("classpath:test_items.sql")
@@ -161,7 +152,6 @@ class ItemServiceImplTest {
     }
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     @Sql("classpath:test_users.sql")
     @Sql("classpath:test_items.sql")
@@ -173,7 +163,6 @@ class ItemServiceImplTest {
     }
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     @Sql("classpath:test_users.sql")
     @Sql("classpath:test_items.sql")
@@ -186,7 +175,6 @@ class ItemServiceImplTest {
     }
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     @Sql("classpath:test_users.sql")
     @Sql("classpath:test_items.sql")

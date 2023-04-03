@@ -19,7 +19,6 @@ import java.util.Objects;
 @NoArgsConstructor
 public class User {
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "email", nullable = false, length = 30)

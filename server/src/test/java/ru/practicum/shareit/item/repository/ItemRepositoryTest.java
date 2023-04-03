@@ -18,7 +18,6 @@ class ItemRepositoryTest {
     private ItemRepository itemRepository;
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     @Sql("classpath:test_users.sql")
     @Sql("classpath:test_items.sql")
@@ -31,7 +30,6 @@ class ItemRepositoryTest {
     }
 
     @Test
-    @Transactional
     @Sql("classpath:cleanup.sql")
     @Sql("classpath:test_users.sql")
     @Sql("classpath:test_items.sql")
