@@ -20,11 +20,8 @@
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring-boot-starter-web.version>2.7.2</spring-boot-starter-web.version>
-		<spring-boot-starter-actuator.version>2.7.2</spring-boot-starter-actuator.version>
-		<spring-boot-configuration-processor.version>2.7.2</spring-boot-configuration-processor.version>
 		<lombok.version>1.18.26</lombok.version>
-		<spring-boot-starter-test.version>2.7.2</spring-boot-starter-test.version>
+		<spring-boot.version>2.7.2</spring-boot.version>
 	</properties>
 
 	<modules>
@@ -37,20 +34,20 @@
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-web</artifactId>
-				<version>${spring-boot-starter-web.version}</version>
+				<version>${spring-boot.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-actuator</artifactId>
-				<version>${spring-boot-starter-actuator.version}</version>
+				<version>${spring-boot.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-configuration-processor</artifactId>
 				<optional>true</optional>
-				<version>${spring-boot-configuration-processor.version}</version>
+				<version>${spring-boot.version}</version>
 			</dependency>
 
 			<dependency>
@@ -64,7 +61,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-test</artifactId>
 				<scope>test</scope>
-				<version>${spring-boot-starter-test.version}</version>
+				<version>${spring-boot.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
