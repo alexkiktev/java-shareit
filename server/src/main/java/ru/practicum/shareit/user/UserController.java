@@ -19,6 +19,12 @@ public class UserController {
 
     private final UserService userService;
 
+    @GetMapping("/hello")
+    public String sayHello() {
+        log.info("Публикуем ответ...");
+        return "Добро пожаловать на борт!";
+    }
+
     @PostMapping
     public UserDto createUser(@RequestBody @Validated({MarkerValidation.OnCreate.class}) UserDto userDto) {
         log.info("Получен запрос на создание пользователя");
