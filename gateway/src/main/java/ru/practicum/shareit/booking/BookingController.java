@@ -27,6 +27,9 @@ public class BookingController {
     public ResponseEntity<Object> createBooking(@RequestHeader(USER_ID) Long bookerId,
                                           @RequestBody @Valid BookingInputDto bookingInputDto) {
         log.info("Создание брони {}, bookerId={}", bookingInputDto, bookerId);
+        if (bookerId == null) {
+            bookerId = 1L;
+        }
         return bookingClient.createBooking(bookerId, bookingInputDto);
     }
 
