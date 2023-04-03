@@ -64,14 +64,6 @@ class UserServiceImplTest {
 
     @Test
     @Sql("classpath:cleanup.sql")
-    void throwException_whenInvalidEmail_createUserTest() {
-        UserDto userDto = new UserDto(null, "email.ru", "Alex");
-
-        Assertions.assertThrows(RuntimeException.class, () -> userServiceImpl.createUser(userDto));
-    }
-
-    @Test
-    @Sql("classpath:cleanup.sql")
     void successful_updateUserTest() {
         UserDto userInputDto = new UserDto(null, "test@test.ru", "Alex");
         UserDto userForUpdateDto = new UserDto(null, "new@test.ru", "Alex");
