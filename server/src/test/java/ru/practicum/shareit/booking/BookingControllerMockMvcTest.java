@@ -77,61 +77,6 @@ class BookingControllerMockMvcTest {
     }
 
     @Test
-    void throwException_whenItemIdIsNull_CreateItemTest() throws Exception {
-        bookingInputDto.setItemId(null);
-
-        mockMvc.perform(post("/bookings")
-                        .content(objectMapper.writeValueAsString(bookingInputDto))
-                        .header("X-Sharer-User-Id", userId)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    void throwException_whenStartIsNull_CreateItemTest() throws Exception {
-        bookingInputDto.setStart(null);
-
-        mockMvc.perform(post("/bookings")
-                        .content(objectMapper.writeValueAsString(bookingInputDto))
-                        .header("X-Sharer-User-Id", userId)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    void throwException_whenEndIsNull_CreateItemTest() throws Exception {
-        bookingInputDto.setEnd(null);
-
-        mockMvc.perform(post("/bookings")
-                        .content(objectMapper.writeValueAsString(bookingInputDto))
-                        .header("X-Sharer-User-Id", userId)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    void throwException_whenStartInPast_CreateItemTest() throws Exception {
-        bookingInputDto.setStart(LocalDateTime.now().minusDays(1));
-
-        mockMvc.perform(post("/bookings")
-                        .content(objectMapper.writeValueAsString(bookingInputDto))
-                        .header("X-Sharer-User-Id", userId)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    void throwException_whenEndInPast_CreateItemTest() throws Exception {
-        bookingInputDto.setEnd(LocalDateTime.now().minusDays(1));
-
-        mockMvc.perform(post("/bookings")
-                        .content(objectMapper.writeValueAsString(bookingInputDto))
-                        .header("X-Sharer-User-Id", userId)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
     void givenBookingOutputDto_whenSuccessful_approvedBookingTest() throws Exception {
         when(bookingService.approvedBooking(userId, bookingId, true)).thenReturn(approvedBookingOutputDto);
 
