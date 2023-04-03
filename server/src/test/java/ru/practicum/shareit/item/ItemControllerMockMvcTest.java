@@ -88,39 +88,6 @@ class ItemControllerMockMvcTest {
     }
 
     @Test
-    void throwException_whenNameIsBlank_createItemTest() throws Exception {
-        newItemDto.setName("");
-
-        mockMvc.perform(post("/items")
-                        .content(objectMapper.writeValueAsString(newItemDto))
-                        .header("X-Sharer-User-Id", userId)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    void throwException_whenDescriptionIsBlank_createItemTest() throws Exception {
-        newItemDto.setDescription("");
-
-        mockMvc.perform(post("/items")
-                        .content(objectMapper.writeValueAsString(newItemDto))
-                        .header("X-Sharer-User-Id", userId)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    void throwException_whenAvailableIsNull_createItemTest() throws Exception {
-        newItemDto.setAvailable(null);
-
-        mockMvc.perform(post("/items")
-                        .content(objectMapper.writeValueAsString(newItemDto))
-                        .header("X-Sharer-User-Id", userId)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
     void givenItemDto_whenSuccessful_updateItemTest() throws Exception {
         when(itemService.updateItem(any(), any(), any())).thenReturn(updatedItemDto);
 

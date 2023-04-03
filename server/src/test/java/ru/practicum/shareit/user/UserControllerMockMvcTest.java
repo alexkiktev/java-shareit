@@ -45,36 +45,6 @@ class UserControllerMockMvcTest {
     }
 
     @Test
-    void throwException_whenNameIsBlank_CreateUserTest() throws Exception {
-        UserDto userDto = new UserDto(null, "test@test.ru", "");
-
-        mockMvc.perform(post("/users")
-                        .content(objectMapper.writeValueAsString(userDto))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    void throwException_whenEmailIsBlank_CreateUserTest() throws Exception {
-        UserDto userDto = new UserDto(null, "", "Alex");
-
-        mockMvc.perform(post("/users")
-                        .content(objectMapper.writeValueAsString(userDto))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    void throwException_whenEmailIncorrectFormat_CreateUserTest() throws Exception {
-        UserDto userDto = new UserDto(null, "testemail.ru", "Alex");
-
-        mockMvc.perform(post("/users")
-                        .content(objectMapper.writeValueAsString(userDto))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
     void givenUserDto_whenSuccessful_UpdateUserTest() throws Exception {
         Long userId = 1L;
         UserDto userDto = new UserDto(userId, "new@test.ru", "Alex");
@@ -89,18 +59,6 @@ class UserControllerMockMvcTest {
                 .andExpect(jsonPath("$.name", is(userDto.getName())));
 
         verify(userService, times(1)).updateUser(userDto, userId);
-    }
-
-    @Test
-    void throwException_whenEmailIncorrectFormat_UpdateUserTest() throws Exception {
-        Long userId = 1L;
-        UserDto userDto = new UserDto(userId, "testemail.ru", "Alex");
-        when(userService.updateUser(userDto, userId)).thenReturn(userDto);
-
-        mockMvc.perform(patch("/users/" + userId)
-                        .content(objectMapper.writeValueAsString(userDto))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
     }
 
     @Test

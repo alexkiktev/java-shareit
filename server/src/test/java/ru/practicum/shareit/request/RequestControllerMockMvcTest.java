@@ -71,17 +71,6 @@ class RequestControllerMockMvcTest {
     }
 
     @Test
-    void throwException_whenDescriptionIsNull_createRequestTest() throws Exception {
-        requestDto.setDescription(null);
-
-        mockMvc.perform(post("/requests")
-                        .content(objectMapper.writeValueAsString(requestDto))
-                        .header("X-Sharer-User-Id", userId)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
     void givenRequestItemInfoDtoList_whenSuccessful_getRequestsByUser() throws Exception {
         when(requestService.getRequestByUser(userId)).thenReturn(List.of(requestItemInfoDto));
 
