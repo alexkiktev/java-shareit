@@ -18,12 +18,6 @@ public class UserController {
 
     private final UserClient userClient;
 
-    @GetMapping("/hello")
-    public String sayHello() {
-        log.info("Публикуем ответ...");
-        return "Добро пожаловать на борт!";
-    }
-
     @PostMapping
     public ResponseEntity<Object> createUser(@RequestBody
                                                  @Validated({MarkerValidation.OnCreate.class}) UserDto userDto) {

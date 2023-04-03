@@ -58,7 +58,8 @@ class BookingControllerMockMvcTest {
         bookingId = 1L;
         dateStart = LocalDateTime.now().plusHours(1);
         dateEnd = LocalDateTime.now().plusHours(8);
-        bookingInputDto = new BookingInputDto(bookingId, dateStart, dateEnd, itemId, null, null);
+        //bookingInputDto = new BookingInputDto(bookingId, dateStart, dateEnd, itemId, null, null);
+        bookingInputDto = new BookingInputDto(itemId, dateStart, dateEnd);
         bookingOutputDto = new BookingOutputDto(bookingId, dateStart, dateEnd, item, user, null);
         approvedBookingOutputDto = new BookingOutputDto(bookingId, dateStart, dateEnd, item, user, Status.APPROVED);
     }

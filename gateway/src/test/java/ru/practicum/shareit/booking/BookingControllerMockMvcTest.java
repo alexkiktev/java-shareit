@@ -35,8 +35,8 @@ class BookingControllerMockMvcTest {
     Long bookingId = 1L;
     LocalDateTime dateStart = LocalDateTime.now().plusHours(1);
     LocalDateTime dateEnd = LocalDateTime.now().plusHours(8);
-    BookingInputDto bookingInputDto =
-            new BookingInputDto(bookingId, dateStart, dateEnd, itemId, null, null);
+    //BookingInputDto bookingInputDto = new BookingInputDto(bookingId, dateStart, dateEnd, itemId, null, null);
+    BookingInputDto bookingInputDto = new BookingInputDto(itemId, dateStart, dateEnd);
 
     @Test
     void throwException_whenItemIdIsNull_CreateItemTest() throws Exception {

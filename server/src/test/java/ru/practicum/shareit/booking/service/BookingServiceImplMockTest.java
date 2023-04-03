@@ -53,7 +53,7 @@ class BookingServiceImplMockTest {
         user1 = new User(2L, "nikolay@mail.ru", "Nikolay");
         item1 = new Item(1L, "Вещь 1", "Описание 1", true, 1L, null);
         booking1 = new Booking(1L, timeStart, timeEnd, item1, user1, null);
-        bookingInputDto1 = new BookingInputDto(1L, timeStart, timeEnd, 1L, 2L, null);
+        bookingInputDto1 = new BookingInputDto(1L, timeStart, timeEnd);
     }
 
     @AfterEach
@@ -66,7 +66,7 @@ class BookingServiceImplMockTest {
         when(bookingRepository.findById(anyLong())).thenReturn(Optional.ofNullable(booking1));
 
         Assertions.assertThrows(BookingOwnerException.class, () ->
-                bookingServiceImpl.approvedBooking(user1.getId(), bookingInputDto1.getId(), true));
+                bookingServiceImpl.approvedBooking(user1.getId(), 1L, true));
     }
 
 }
